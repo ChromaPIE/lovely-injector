@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - aarch-linux-android
+          - aarch64-linux-android
 
     steps:
       - name: Checkout
