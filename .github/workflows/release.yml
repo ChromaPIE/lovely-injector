@@ -57,42 +57,10 @@ jobs:
 
       - name: Compress
         run: |
-          cd ./target/${{ matrix.target }}/release/
-          7z a "lovely-${{ matrix.target }}.zip" version.dll
+          cd ./target/${{ matrix.target }}/
+          7z a "lovely-${{ matrix.target }}.zip" release
           mv "lovely-${{ matrix.target }}.zip" ${{ github.workspace }}
 
-      - name: Submit build artifact
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          gh release upload ${{ github.ref_name }} lovely-${{ matrix.target }}.zip
-
-  build-windows:
-    needs: prepare
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        target:
-          - x86_64-pc-windows-msvc
-        
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        
-      - name: Setup toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          target: ${{ matrix.target }}
-        
-      - name: Build
-        run: cargo build --target ${{ matrix.target }} --package lovely-win --release
-        
-      - name: Compress
-        run: |
-            cd ./target/${{ matrix.target }}/
-            7z a "lovely-${{ matrix.target }}.zip" release
-            mv "lovely-${{ matrix.target }}.zip" ${{ github.workspace }}
-        
       - name: Submit build artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
