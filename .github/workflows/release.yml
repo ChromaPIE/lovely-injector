@@ -7,7 +7,7 @@ on:
 
 jobs:
   prepare:
-    name: Create draft release
+    name: Create  draft release
     runs-on: ubuntu-latest
 
     steps:
